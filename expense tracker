@@ -1,0 +1,60 @@
+def expense_tracker():
+
+    total_spent = 0.0
+    expenses = []
+
+    print("=" * 50)
+    print("💰 EXPENSE TRACKER")
+    print("=" * 50)
+    print("Enter expenses one by one. Type 'done' when finished.")
+    print("-" * 50)
+
+    while True:
+        user_input = input("Enter expense amount (or 'done'): ").strip()
+
+        if user_input.lower() == 'done':
+            break
+
+        # --- VALIDATION ---
+        try:
+            amount = float(user_input)
+            if amount < 0:
+                print("❌ Trash input. Expenses can't be negative. Try again.")
+                continue
+            if amount == 0:
+                print("⚠️  Zero? Really? Fine, I'll count it.")
+        except ValueError:
+            print("❌ Trash input. Enter a NUMBER, not whatever that was.")
+            continue
+
+        # --- ACCUMULATION ---
+        expenses.append(amount)
+        total_spent += amount  # The accumulator pattern
+
+        print(f"   Added: ${amount:.2f} | Running Total: ${total_spent:.2f}")
+
+    # --- SUMMARY ---
+    print("" + "=" * 50)
+    print("📊 SUMMARY")
+    print("=" * 50)
+
+    if not expenses:
+        print("You didn't enter anything. Broke and lazy?")
+    else:
+        print(f"Total number of expenses: {len(expenses)}")
+        print(f"Total amount spent:       ${total_spent:.2f}")
+        print(f"Average expense:          ${total_spent / len(expenses):.2f}")
+        print(f"Largest expense:            ${max(expenses):.2f}")
+        print(f"Smallest expense:           ${min(expenses):.2f}")
+
+        print("--- Individual Expenses ---")
+        for i, exp in enumerate(expenses, 1):
+            print(f"  {i}. ${exp:.2f}")
+
+    print("=" * 50)
+    return total_spent
+
+
+# Run it
+if __name__ == "__main__":
+    expense_tracker()
